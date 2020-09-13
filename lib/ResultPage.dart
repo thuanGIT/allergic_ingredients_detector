@@ -46,12 +46,14 @@ class ResultPageState extends State<ResultPage> {
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final record = Record.fromSnapshot(data);
     print("*****" + widget.category);
-    String item = widget.category.toLowerCase() == "dairy" ? record.dairy : record.nuts;
+    String item =
+        widget.category.toLowerCase() == "dairy" ? record.dairy : record.nuts;
     bool found = false;
     Text noti;
-    print("#####"+item);
+    print("#####" + item);
     print(widget.result);
-    if (widget.result.contains(item + ",")) {
+
+    if (widget.result.contains(item)) {
       found = true;
     }
     // For debugging
