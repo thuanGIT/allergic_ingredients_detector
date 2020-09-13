@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
+import 'ResultPage.dart';
 
 class CameraPage extends StatefulWidget {
+  final String category;
+  const CameraPage({Key key, this.category}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return new CameraPageState();
@@ -16,14 +18,14 @@ class CameraPage extends StatefulWidget {
 class CameraPageState extends State<CameraPage> {
   File pickedImage;
   bool isImageLoaded;
-  String result;
+  Set<String> result;
 
   @override
   void initState() {
     super.initState();
     setState(() {
       isImageLoaded = false;
-      result = "";
+      result = new Set<String>();
     });
   }
 
@@ -47,63 +49,69 @@ class CameraPageState extends State<CameraPage> {
     for (TextBlock block in readText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement word in line.elements) {
-          print(word.text);
+          print(word.text.toLowerCase());
+          result.add(word.text.toLowerCase());
         }
       }
     }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ResultPage(
+                result: result,
+                category: widget.category,
+              )),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Allergy Detector'),
-      ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 60,
-          ),
-          isImageLoaded
-              ? Center(
-                  child: Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: FileImage(pickedImage),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                )
-              : Center(
-                  child: Container(
-                    color: Colors.lightBlue,
-                    child: Center(
-                      child: Loading(
-                          indicator: BallPulseIndicator(),
-                          size: 100.0,
-                          color: Colors.pink),
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 10,
+        ),
+        isImageLoaded
+            ? Center(
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: FileImage(pickedImage),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-          SizedBox(
-            height: 50,
-          ),
-          RaisedButton(
-            child: Text('Pick an image'),
-            onPressed: pickImage,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          RaisedButton(
-            child: Text('Read text'),
-            onPressed: readText,
-          ),
-        ],
-      ),
+              )
+            : Center(
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('asset/images/image.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+        SizedBox(
+          height: 10,
+        ),
+        RaisedButton(
+          child: Text('Pick an image'),
+          onPressed: pickImage,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        RaisedButton(
+          child: Text('Check'),
+          onPressed: readText,
+        ),
+      ],
     );
   }
 }

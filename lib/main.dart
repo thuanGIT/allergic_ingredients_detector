@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'CameraPage.dart';
+import 'HomePage.dart';
 
-// Global variable for storing the list of
-// cameras available
-
-Future<void> main() async {
+void main() {
   runApp(MyApp());
 }
 
@@ -13,13 +10,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Food Contest',
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: new CameraPage(),
+      theme: ThemeData(fontFamily: 'Comic Sans MS'),
+      home: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("asset/images/background.jpg"),
+                  fit: BoxFit.cover)),
+          child: MyHomePage()),
     );
   }
 }
