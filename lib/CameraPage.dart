@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
 
 class CameraPage extends StatefulWidget {
   @override
@@ -13,12 +16,14 @@ class CameraPage extends StatefulWidget {
 class CameraPageState extends State<CameraPage> {
   File pickedImage;
   bool isImageLoaded;
+  String result;
 
   @override
   void initState() {
     super.initState();
     setState(() {
       isImageLoaded = false;
+      result = "";
     });
   }
 
@@ -32,8 +37,10 @@ class CameraPageState extends State<CameraPage> {
   }
 
   Future readText() async {
-    FirebaseVisionImage ourImage = FirebaseVisionImage.fromFile(pickedImage);
-    TextRecognizer detector = FirebaseVision.instance.textRecognizer();
+    print('click');
+    final FirebaseVisionImage ourImage =
+        FirebaseVisionImage.fromFile(pickedImage);
+    final TextRecognizer detector = FirebaseVision.instance.textRecognizer();
     VisionText readText = await detector.processImage(ourImage);
 
     // Iterate over the entire block of words
@@ -49,8 +56,14 @@ class CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Allergy Detector'),
+      ),
       body: Column(
         children: <Widget>[
+          SizedBox(
+            height: 60,
+          ),
           isImageLoaded
               ? Center(
                   child: Container(
@@ -64,9 +77,19 @@ class CameraPageState extends State<CameraPage> {
                     ),
                   ),
                 )
-              : Center(),
+              : Center(
+                  child: Container(
+                    color: Colors.lightBlue,
+                    child: Center(
+                      child: Loading(
+                          indicator: BallPulseIndicator(),
+                          size: 100.0,
+                          color: Colors.pink),
+                    ),
+                  ),
+                ),
           SizedBox(
-            height: 10,
+            height: 50,
           ),
           RaisedButton(
             child: Text('Pick an image'),

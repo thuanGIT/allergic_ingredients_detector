@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'CameraPage.dart';
 
-void main() {
+// Global variable for storing the list of
+// cameras available
+
+Future<void> main() async {
   runApp(MyApp());
 }
 
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: new CameraPage(),
