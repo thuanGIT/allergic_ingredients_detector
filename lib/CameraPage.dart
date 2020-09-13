@@ -51,7 +51,7 @@ class CameraPageState extends State<CameraPage> {
         for (TextElement word in line.elements) {
           String e = word.text;
           print(e);
-          result.add(e.replaceAll(new RegExp('[^a-zA-Z]*'), '').toLowerCase());
+          result.add(e.replaceAll(new RegExp(r'[^a-zA-Z]*'), '').toLowerCase());
         }
       }
     }
