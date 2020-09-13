@@ -1,6 +1,54 @@
-# Issue that may be encountered
+# INSPIRATION
+* Food security is now a common concern for many people. We want to create a tool that can help users easily and quickly identify foods that contain allergic ingredients to them.
+
+# WHAT IT DOES
+* The app walks users through 2 simple steps. First, users need to fill in the box with their allergy. Then, they need to upload image of the ingredients. Finally, the app will provide result whether the food is safe to consume or not.
+
+# HOW WE BUILT IT
+We use: 
+* Flutter to build User Interface. 
+* Flutter's machine learning kit (MLKit) to recognize text from uploaded image.
+* Firebase to store data about ingredients causing allergy.
+
+# INSTRUCTIONS ON INSTALLATION AND SAMPLE RUN
+
+* Install Flutter (MacOS):
+  * Download the [Flutter SDK](https://flutter.dev/docs/get-started/install/macos) and put it in a folder of your choice, /Users/$HOME/ (recommended).
+  * Update Path permanently by opening terminal. 
+    * Type:<br/>
+      ```bash cd ~/```<br/> 
+      ```bash touch .bash_profile```<br/>
+      ```bash open -e .bash_profile``` or ```bash vim .bash_profile```<br/>
+    * Add the following line to the bash_profile where [PATH_TO_FLUTTER_GIT_DIRECTORY] is your path to the location of the fultter sdk folder:<br/>
+      ```bash export PATH="$PATH:[PATH_TO_FLUTTER_GIT_DIRECTORY]/flutter/bin"```
+
+*  Install IDE or code editor of your choice. Mine is VSCode where you can find Flutter extension along with extensions for Dart language. For more information, follow this [playlist](https://youtu.be/I9ceqw5Ny-4).
+
+* Adding FireBase to your Flutter Project:
+  * Create a FireBase account at [FireBase](https://firebase.google.com).
+  * Create a firebase Project. Follow the instructions to for setting up. Make you have google-services.json in your android/app folder.
+  * In your pubspec.yaml file **(if not cloning from this repository)**. Add the following lines to your **dependencies:**
+    * ```bash firebase_core: ^0.4.0+9``` - Check that you have this dependency (added in the previous step)
+    * ``` bash firebase_analytics: ^5.0.2``` - Add the dependency for the FlutterFire plugin for Google Analytics
+    * ```bash firebase_auth: ^0.14.0+5``` - to use Firebase Authentication
+    * ```bash cloud_firestore: ^0.12.9+5``` - to use Cloud Firestore
+    * ```bash image_picker: ^0.6.7+7``` - to allow user to pick image from gallery
+    * ```bash firebase_ml_vision: ^0.9.3+8``` - FireBase ML Vision 
+ * Import for using those above packages:<br/>
+  * ``` bash import 'package:image_picker/image_picker.dart';```
+  * ``` bash import 'package:firebase_ml_vision/firebase_ml_vision.dart';```
+  
+* **You are ready to run the sample source code !!!**
+  
+
+# CHALLENGES
+* How to connect Firebase with Flutter app 
+* How to utilize Flutter's MLKit 
+* How to retrieve data from database on Firebase
+
+# POTENTIAL ISSUE
 *   "Firebase_core_web , firebase_auth_web, cloud_firestore_web Plugin project :firebase_auth_web not found. Please update settings.gradle." --> [SOLUTION](https://github.com/FirebaseExtended/flutterfire/issues/2599)
-*   "Flutter Firestore causing D8: Cannot fit requested classes in a single dex file # methods: 71610 > 65536 in Android Studio" -->[solution](https://stackoverflow.com/questions/55591958/flutter-firestore-causing-d8-cannot-fit-requested-classes-in-a-single-dex-file)
+*   "Flutter Firestore causing D8: Cannot fit requested classes in a single dex file # methods: 71610 > 65536 in Android Studio" -->[SOLUTION](https://stackoverflow.com/questions/55591958/flutter-firestore-causing-d8-cannot-fit-requested-classes-in-a-single-dex-file)
 
 *   If encountering "Waiting for the text recognition model to be downloaded. Please wait,..null" issue. Try on Nexus 5 (AVD manager - create new device). If still not resolving the issue, wait 5-10 minutes for downloading the OCR library. Upon success, the debug console may look like this.
 
@@ -113,3 +161,11 @@ I/flutter (12236): INGREDIENTS:
 I/flutter (12236): Organic
 ...
 ```
+
+# WHAT WE LEARNT
+* Machine Learning, especially text recognition from images. Creating Flutter app.
+
+# WHAT'S NEXT
+* Improve on the database of allergic ingredients so that the app is suitable for diversity of users.
+* Add a new feature where users can use their camera to directly take and load pictures into the app.
+
